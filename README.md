@@ -11,4 +11,4 @@ archivo a main.py y ponga a bajar otro, finalmente que sume todos los log.csv y 
 para la proxima version:
    conectar main.py con streamscrapper.sh
    terminar main.sh
- 
+sentiment.py es el sentiment analyzer, toma un string y tira un numero, esta explicado en el output
