@@ -1,3 +1,4 @@
 .idea
 src/workers/__pycache__/*
 src/services/__pycache__/*
+out/*
