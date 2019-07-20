@@ -48,11 +48,12 @@ def analyze(video):
     face_names = []
     process_this_frame = True
 
+    filename = "../out/" + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".csv"
+
     while True:
         # Grab a single frame of video
         ret, frame = video_capture.read()
         # crear .csv
-        filename = "../out/" + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".csv"
         csv = open(filename, "w+")
         write = str("name, total time, " + "start time: " + start_time + ", end time " + datetime.now().strftime(
             '%Y-%m-%d %H:%M:%S') + "\n")
