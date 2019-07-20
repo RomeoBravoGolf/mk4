@@ -10,3 +10,5 @@ def work():
     parser = Worker(['scraping'], connection=redis_conn, name='scraper')
 
     parser.work()
+
+work()
