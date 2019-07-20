@@ -1,4 +1,20 @@
 # mk4
+
+------------
+HOW TO RUN
+------------
+
+FROM THE mk4/src FOLDER:
+
+Terminal1 mk4/src> redis-server
+
+Terminal2 mk4/src> python analyzing_worker.py
+
+Terminal3 mk4/src> python scraping_worker.py
+
+Terminal4 mk4/src> python scheduler.py
+
+------------
 mk4
 tube scrapper te baja videos de youtube; input: URl del video, Output, elvideoen.mp4
 streamscrapper.sh te baja un stream acotado, creo que esta hardcodeado para 30secs, input: URL, output streambajado.ts 
