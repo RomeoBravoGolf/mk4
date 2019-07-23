@@ -48,7 +48,7 @@ def analyze(video):
     face_names = []
     process_this_frame = True
 
-    filename = "../out/" + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".csv"
+    filename = video[:-3]+".csv"
 
     while True:
         # Grab a single frame of video
@@ -59,7 +59,8 @@ def analyze(video):
             '%Y-%m-%d %H:%M:%S') + "\n")
         csv.write(write)
         for zz in range(7):
-            body = known_face_names[zz], counter[zz]
+            appearence_time = counter[zz] if counter[zz] > 1 else 0
+            body = known_face_names[zz], appearence_time
             body = str(body).replace(")", "\n").replace("'", "").replace("(", "")
             csv.write(body)
         csv.close()

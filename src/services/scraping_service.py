@@ -10,8 +10,8 @@ def scrape(url, interval):
     filename = "../out/"+datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")+".ts"
     os.system("pwd")
     p = subprocess.Popen(["./services/scraper.sh", url, str(interval), filename])
-    subprocess.Popen.wait(p)
-    analyzing_q.enqueue(analyzing_service.analyze, filename)
+    p.wait()
 
-redis_conn = Redis()
-analyzing_q = Queue('analyzing', connection=redis_conn)
+    redis_conn = Redis()
+    analyzing_q = Queue('analyzing', connection=redis_conn)
+    analyzing_q.enqueue(analyzing_service.analyze, filename)
