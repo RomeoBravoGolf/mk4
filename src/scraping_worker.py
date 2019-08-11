@@ -6,7 +6,7 @@ from redis import Redis
 
 def work():
     redis_conn = Redis()
-    parser = Worker(['scraping'], connection=redis_conn, name='scraper')
+    parser = Worker(['scraping'], connection=redis_conn)
 
     parser.work()
 

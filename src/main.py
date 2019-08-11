@@ -2,4 +2,4 @@ from scheduler import Scheduler
 
 if __name__ == '__main__':
     scheduler = Scheduler()
-    scheduler.run("https://www.youtube.com/watch?v=NiT7yTebBc8", 20, 244)
+    scheduler.run("https://www.youtube.com/watch?v=-1xif50QMr4", 60*5, 94)
