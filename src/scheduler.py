@@ -9,11 +9,11 @@ class Scheduler:
         redis_conn = Redis()
         self.scraping_q = Queue('scraping', connection=redis_conn)
 
-    def scheduler_loop(self, url, time_interval):
+    def scheduler_loop(self, url, time_interval, fmt):
         while True:
-            self.scraping_q.enqueue(scraping_service.scrape, url, time_interval)
+            self.scraping_q.enqueue(scraping_service.scrape, url, time_interval, fmt)
             print("Added scraping job to the queue.")
             time.sleep(time_interval)
 
-    def run(self, url, interval):
-        self.scheduler_loop(url, interval)
+    def run(self, url, interval, fmt):
+        self.scheduler_loop(url, interval, fmt)

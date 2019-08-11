@@ -6,10 +6,10 @@ import redis
 from redis import Redis
 from services import analyzing_service
 
-def scrape(url, interval):
+def scrape(url, interval, fmt):
     filename = "../out/"+datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")+".ts"
     os.system("pwd")
-    p = subprocess.Popen(["./services/scraper.sh", url, str(interval), filename])
+    p = subprocess.Popen(["./services/scraper.sh", url, str(interval), filename, str(fmt)])
     p.wait()
 
     redis_conn = Redis()
