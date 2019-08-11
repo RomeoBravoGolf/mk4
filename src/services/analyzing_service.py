@@ -11,38 +11,16 @@ def analyze(video):
 
     # buscar framerate
     fps = video_capture.get(cv2.CAP_PROP_FPS)
-    print('el video tiene ', fps, ' efepeeses')
 
-    macri = face_recognition.load_image_file("../resources/macri.jpg")
-    macri_encoding = face_recognition.face_encodings(macri)[0]
+    known_face_names = []
+    known_face_encodings = []
+    counter = []
 
-    bergman = face_recognition.load_image_file("../resources/bergman.jpg")
-    bergman_encoding = face_recognition.face_encodings(bergman)[0]
-
-    larreta = face_recognition.load_image_file("../resources/larreta.jpg")
-    larreta_encoding = face_recognition.face_encodings(larreta)[0]
-
-    malcorra = face_recognition.load_image_file("../resources/malcorra.jpg")
-    malcorra_encoding = face_recognition.face_encodings(malcorra)[0]
-
-    frigerio = face_recognition.load_image_file("../resources/frigerio.jpg")
-    frigerio_encoding = face_recognition.face_encodings(frigerio)[0]
-
-    pinedo = face_recognition.load_image_file("../resources/pinedo.jpg")
-    pinedo_encoding = face_recognition.face_encodings(pinedo)[0]
-
-    lombardi = face_recognition.load_image_file("../resources/lombardi.jpg")
-    lombardi_encoding = face_recognition.face_encodings(lombardi)[0]
-
-    known_face_encodings = [
-        macri_encoding, bergman_encoding, larreta_encoding, malcorra_encoding, frigerio_encoding, pinedo_encoding,
-        lombardi_encoding
-    ]
-    known_face_names = [
-        "Mauricio Macri", "ingmar Bergman", "Horacio Larreta", "Susana Malcorra", "Rogelio Frigerio", "Federico Pinedo",
-        "Hernan Lombardi"
-    ]
-    counter = [0, 0, 0, 0, 0, 0, 0]
+    for filename in os.listdir("../resources/"):
+        known_face_names.append(filename[:-4])
+        counter.append(0)
+        encoding = face_recognition.load_image_file("../resources/"+filename)
+        known_face_encodings.append(face_recognition.face_encodings(encoding)[0])
 
     face_locations = []
     face_encodings = []
@@ -120,8 +98,7 @@ def analyze(video):
 
     csv = open(filename, "w+")
 
-    write = str("name, total time, " + "start time: " + start_time + ", end time " + datetime.now().strftime(
-        '%Y-%m-%d %H:%M:%S') + "\n")
+    write = str("name, total time\n")
     csv.write(write)
 
     for zz in range(7):
