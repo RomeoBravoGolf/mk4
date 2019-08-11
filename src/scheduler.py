@@ -11,7 +11,7 @@ class Scheduler:
 
     def scheduler_loop(self, url, time_interval, fmt):
         while True:
-            self.scraping_q.enqueue(scraping_service.scrape, url, time_interval, fmt)
+            self.scraping_q.enqueue(scraping_service.scrape, url, time_interval, fmt, job_timeout=-1)
             print("Added scraping job to the queue.")
             time.sleep(time_interval)
 

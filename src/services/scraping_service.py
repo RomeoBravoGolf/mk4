@@ -14,4 +14,4 @@ def scrape(url, interval, fmt):
 
     redis_conn = Redis()
     analyzing_q = Queue('analyzing', connection=redis_conn)
-    analyzing_q.enqueue(analyzing_service.analyze, filename)
+    analyzing_q.enqueue(analyzing_service.analyze, filename, job_timeout=-1)

@@ -2,6 +2,7 @@ import face_recognition
 import cv2
 import numpy as np
 from datetime import datetime
+import os
 
 def analyze(video):
     start_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -48,24 +49,15 @@ def analyze(video):
     face_names = []
     process_this_frame = True
 
-    filename = video[:-3]+".csv"
-
     while True:
         # Grab a single frame of video
         ret, frame = video_capture.read()
-        # crear .csv
-        csv = open(filename, "w+")
-        write = str("name, total time, " + "start time: " + start_time + ", end time " + datetime.now().strftime(
-            '%Y-%m-%d %H:%M:%S') + "\n")
-        csv.write(write)
-        for zz in range(7):
-            appearence_time = counter[zz] if counter[zz] > 1 else 0
-            body = known_face_names[zz], appearence_time
-            body = str(body).replace(")", "\n").replace("'", "").replace("(", "")
-            csv.write(body)
-        csv.close()
+
         # Resize frame of video to 1/4 size for faster face recognition processing
-        small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+        try:
+            small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+        except Exception as e:
+            break
 
         # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
         rgb_small_frame = small_frame[:, :, ::-1]
@@ -95,8 +87,8 @@ def analyze(video):
                     for xx in range(7):
                         if name == known_face_names[xx]:
                             counter[xx] += 1 / fps
-                for yy in range(7):
-                    print(known_face_names[yy], counter[yy])
+                #for yy in range(7):
+                #    print(known_face_names[yy], counter[yy])
 
                 face_names.append(name)
 
@@ -124,5 +116,22 @@ def analyze(video):
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
+    filename = video[:-3] + ".csv"
+
+    csv = open(filename, "w+")
+
+    write = str("name, total time, " + "start time: " + start_time + ", end time " + datetime.now().strftime(
+        '%Y-%m-%d %H:%M:%S') + "\n")
+    csv.write(write)
+
+    for zz in range(7):
+        appearence_time = counter[zz] if counter[zz] > 1 else 0
+        body = known_face_names[zz], appearence_time
+        body = str(body).replace(")", "\n").replace("'", "").replace("(", "")
+        csv.write(body)
+    csv.close()
+
     video_capture.release()
     cv2.destroyAllWindows()
+
+    os.system("rm "+video)
